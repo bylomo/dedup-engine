@@ -8,17 +8,19 @@
 	<description>Deduplication Engine for Nextgenstorage</description>
 
 	<properties>
-		<hazelcast.version>3.6</hazelcast.version>
+		<hazelcast.version>3.6.2</hazelcast.version>
 		<guava.version>19.0</guava.version>
 		<slf4j-log4j.version>1.7.12</slf4j-log4j.version>
 		<mysql-connector-java.version>5.1.38</mysql-connector-java.version>
 		<junit.version>4.12</junit.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
+		<mongodb-driver.version>3.2.2</mongodb-driver.version> 
 	</properties>
 
 	<dependencies>
 		<!-- Hazelcast -->
 		<dependency>
-			<groupId>com.hazelcast</groupId> 
+			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
 			<version>${hazelcast.version}</version>
 		</dependency>
@@ -27,12 +29,36 @@
 			<artifactId>hazelcast-client</artifactId>
 			<version>${hazelcast.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast-spring</artifactId>
+			<version>${hazelcast.version}</version>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 
 		<!-- MySQL -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-connector-java.version}</version>
+		</dependency>
+
+		<!-- MongoDB -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver</artifactId>
+			<version>${mongodb-driver.version}</version>
 		</dependency>
 
 		<!-- Guava -->

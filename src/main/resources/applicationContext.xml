@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:hz="http://www.hazelcast.com/schema/spring"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation=
+              "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+              http://www.hazelcast.com/schema/spring http://www.hazelcast.com/schema/spring/hazelcast-spring.xsd">
+
+    <context:component-scan base-package="com.dedup4.dedup.engine.detection.impl.*"/>
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/hazelcast-config.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <hz:hazelcast id="instance">
+        <hz:config>
+            <hz:group name="${name}" password="${password}"/>
+            <hz:properties>
+                <hz:property name="hazelcast.merge.first.run.delay.seconds">5</hz:property>
+                <hz:property name="hazelcast.merge.next.run.delay.seconds">5</hz:property>
+            </hz:properties>
+            <hz:network port="${defaultPort}" port-auto-increment="true">
+                <hz:join>
+                    <hz:multicast enabled="true"/>
+                </hz:join>
+            </hz:network>
+        </hz:config>
+    </hz:hazelcast>
+
+    <hz:client id="client">
+        <hz:group name="${name}" password="${password}"/>
+        <hz:network>
+            <hz:member>127.0.0.1:5701</hz:member>
+        </hz:network>
+    </hz:client>
+
+    <hz:map id="map" instance-ref="instance" name="Map" lazy-init="false"/>
+    <hz:idGenerator id="idGenerator" instance-ref="instance" name="IdGenerator"/>
+</beans>
